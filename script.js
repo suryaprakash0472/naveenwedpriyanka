@@ -1,617 +1,1109 @@
 /* =========================================================
    PRIYANKA & NAVEEN
-   CINEMATIC ANNIVERSARY EXPERIENCE
+   FROM HELLO TO FOREVER
+   PREMIUM ANNIVERSARY EXPERIENCE
 ========================================================= */
 
+document.addEventListener("DOMContentLoaded", () => {
 
-/* =========================================================
-   CONFIGURATION
-========================================================= */
+    /* =====================================================
+       ELEMENTS
+    ===================================================== */
 
-const anniversaryDate = new Date("2020-08-23T00:00:00");
+    const loader = document.getElementById("loader");
+    const navbar = document.getElementById("navbar");
 
+    const beginButton =
+        document.getElementById("beginButton");
 
-/* =========================================================
-   ELEMENTS
-========================================================= */
+    const journey =
+        document.getElementById("journey");
 
-const loader = document.getElementById("loader");
-const song = document.getElementById("song");
-const musicBtn = document.getElementById("musicBtn");
+    const topButton =
+        document.getElementById("topButton");
 
+    const menuButton =
+        document.getElementById("menuButton");
 
-/* =========================================================
-   PAGE LOADER
-========================================================= */
+    const mobileMenu =
+        document.getElementById("mobileMenu");
 
-window.addEventListener("load", () => {
+    const musicButton =
+        document.getElementById("musicButton");
 
-  setTimeout(() => {
+    const loveSong =
+        document.getElementById("loveSong");
 
-    if (!loader) return;
+    const cursorHeart =
+        document.getElementById("cursorHeart");
 
-    loader.style.opacity = "0";
+    const lightbox =
+        document.getElementById("lightbox");
 
-    setTimeout(() => {
-      loader.remove();
-    }, 800);
+    const lightboxImage =
+        document.getElementById("lightboxImage");
 
-  }, 900);
+    const lightboxCaption =
+        document.getElementById("lightboxCaption");
 
-});
+    const lightboxClose =
+        document.getElementById("lightboxClose");
 
+    const yearsTogether =
+        document.getElementById("yearsTogether");
 
-/* =========================================================
-   LIVE ANNIVERSARY COUNTER
-========================================================= */
+    const daysTogether =
+        document.getElementById("daysTogether");
 
-function updateCounter() {
 
-  const now = new Date();
+    /* =====================================================
+       PAGE LOADER
+    ===================================================== */
 
-  const difference =
-    Math.max(
-      0,
-      now.getTime() - anniversaryDate.getTime()
-    );
+    window.addEventListener("load", () => {
 
-  const totalSeconds =
-    Math.floor(difference / 1000);
+        setTimeout(() => {
 
+            if (loader) {
 
-  const days =
-    Math.floor(totalSeconds / 86400);
+                loader.classList.add("hide");
 
-  const hours =
-    Math.floor(totalSeconds / 3600) % 24;
+            }
 
-  const minutes =
-    Math.floor(totalSeconds / 60) % 60;
-
-  const seconds =
-    totalSeconds % 60;
-
-
-  const daysElement =
-    document.getElementById("days");
-
-  const hoursElement =
-    document.getElementById("hours");
-
-  const minutesElement =
-    document.getElementById("minutes");
-
-  const secondsElement =
-    document.getElementById("seconds");
-
-
-  if (daysElement) {
-    daysElement.textContent =
-      days.toLocaleString();
-  }
-
-  if (hoursElement) {
-    hoursElement.textContent =
-      String(hours).padStart(2, "0");
-  }
-
-  if (minutesElement) {
-    minutesElement.textContent =
-      String(minutes).padStart(2, "0");
-  }
-
-  if (secondsElement) {
-    secondsElement.textContent =
-      String(seconds).padStart(2, "0");
-  }
-
-}
-
-
-updateCounter();
-
-setInterval(updateCounter, 1000);
-
-
-/* =========================================================
-   SCROLL REVEAL
-========================================================= */
-
-const revealObserver =
-  new IntersectionObserver(
-
-    (entries) => {
-
-      entries.forEach((entry) => {
-
-        if (entry.isIntersecting) {
-
-          entry.target.classList.add("visible");
-
-          revealObserver.unobserve(entry.target);
-
-        }
-
-      });
-
-    },
-
-    {
-      threshold: 0.14
-    }
-
-  );
-
-
-document
-  .querySelectorAll(".reveal")
-  .forEach((element) => {
-
-    revealObserver.observe(element);
-
-  });
-
-
-/* =========================================================
-   JOURNEY IMAGE PARALLAX
-========================================================= */
-
-const journeyImages =
-  document.querySelectorAll(
-    ".journey-image img"
-  );
-
-
-window.addEventListener(
-  "scroll",
-  () => {
-
-    const windowHeight =
-      window.innerHeight;
-
-
-    journeyImages.forEach((image) => {
-
-      const rect =
-        image.getBoundingClientRect();
-
-      const center =
-        rect.top + rect.height / 2;
-
-      const distance =
-        center - windowHeight / 2;
-
-      const movement =
-        Math.max(
-          -18,
-          Math.min(18, distance * -0.025)
-        );
-
-
-      image.style.transform =
-        `scale(1.035) translateY(${movement}px)`;
+        }, 900);
 
     });
 
-  },
-  {
-    passive: true
-  }
-);
+
+    /* =====================================================
+       NAVBAR SCROLL EFFECT
+    ===================================================== */
+
+    function updateNavbar() {
+
+        if (!navbar) return;
+
+        if (window.scrollY > 60) {
+
+            navbar.classList.add("scrolled");
+
+        } else {
+
+            navbar.classList.remove("scrolled");
+
+        }
+
+    }
+
+    window.addEventListener(
+        "scroll",
+        updateNavbar,
+        { passive: true }
+    );
+
+    updateNavbar();
 
 
-/* =========================================================
-   MUSIC PLAYER
-========================================================= */
+    /* =====================================================
+       BEGIN STORY BUTTON
+    ===================================================== */
 
-if (musicBtn) {
+    if (beginButton && journey) {
 
-  musicBtn.addEventListener(
-    "click",
-    () => {
+        beginButton.addEventListener("click", () => {
 
-      /*
-        IMPORTANT:
+            journey.scrollIntoView({
+                behavior: "smooth",
+                block: "start"
+            });
 
-        Add music.mp3 to the project folder.
+        });
 
-        Then change in index.html:
-
-        src=""
-
-        to:
-
-        src="music.mp3"
-      */
+    }
 
 
-      if (!song || !song.src) {
+    /* =====================================================
+       SCROLL REVEAL
+    ===================================================== */
 
-        alert(
-          "Add the couple's licensed song as music.mp3 and set src=\"music.mp3\" in index.html."
+    const revealElements =
+        document.querySelectorAll(".reveal");
+
+
+    const revealObserver =
+        new IntersectionObserver(
+
+            (entries, observer) => {
+
+                entries.forEach((entry) => {
+
+                    if (entry.isIntersecting) {
+
+                        entry.target.classList.add(
+                            "visible"
+                        );
+
+                        observer.unobserve(
+                            entry.target
+                        );
+
+                    }
+
+                });
+
+            },
+
+            {
+                threshold: 0.12,
+                rootMargin: "0px 0px -40px 0px"
+            }
+
         );
 
-        return;
 
-      }
+    revealElements.forEach((element) => {
+
+        revealObserver.observe(element);
+
+    });
 
 
-      if (song.paused) {
+    /* =====================================================
+       MOBILE MENU
+    ===================================================== */
 
-        song
-          .play()
-          .then(() => {
+    if (menuButton && mobileMenu) {
 
-            musicBtn.innerHTML =
-              "❚❚ <span>Our Song</span>";
+        menuButton.addEventListener(
+            "click",
+            () => {
 
-          })
-          .catch(() => {
+                mobileMenu.classList.toggle(
+                    "active"
+                );
 
-            alert(
-              "The browser blocked audio playback. Click the music button again."
+                document.body.classList.toggle(
+                    "no-scroll"
+                );
+
+            }
+        );
+
+
+        const mobileLinks =
+            mobileMenu.querySelectorAll("a");
+
+
+        mobileLinks.forEach((link) => {
+
+            link.addEventListener(
+                "click",
+                () => {
+
+                    mobileMenu.classList.remove(
+                        "active"
+                    );
+
+                    document.body.classList.remove(
+                        "no-scroll"
+                    );
+
+                }
             );
-
-          });
-
-      } else {
-
-        song.pause();
-
-        musicBtn.innerHTML =
-          "♪ <span>Our Song</span>";
-
-      }
-
-    }
-  );
-
-}
-
-
-/* =========================================================
-   FLOATING HEARTS
-========================================================= */
-
-function createHeart() {
-
-  const heart =
-    document.createElement("div");
-
-  heart.className =
-    "floating-heart";
-
-  heart.innerHTML = "♥";
-
-
-  const size =
-    Math.random() * 12 + 8;
-
-  const left =
-    Math.random() * 100;
-
-  const duration =
-    Math.random() * 5 + 5;
-
-
-  heart.style.left =
-    `${left}%`;
-
-  heart.style.fontSize =
-    `${size}px`;
-
-  heart.style.animationDuration =
-    `${duration}s`;
-
-
-  document.body.appendChild(heart);
-
-
-  setTimeout(() => {
-
-    heart.remove();
-
-  }, duration * 1000);
-
-}
-
-
-/*
-   Create a heart occasionally.
-*/
-
-setInterval(
-  createHeart,
-  2800
-);
-
-
-/* =========================================================
-   LOVE LETTER EXPERIENCE
-========================================================= */
-
-const letter =
-  document.querySelector(".letter");
-
-
-if (letter) {
-
-  const letterWrap =
-    letter.parentElement;
-
-
-  /*
-     Create the button.
-  */
-
-  const openButton =
-    document.createElement("button");
-
-  openButton.className =
-    "open-letter";
-
-  openButton.type =
-    "button";
-
-  openButton.innerHTML =
-    `
-      <span class="envelope-icon">✉</span>
-      <span>Open My Heart</span>
-    `;
-
-
-  /*
-     Put button before the letter.
-  */
-
-  letterWrap.insertBefore(
-    openButton,
-    letter
-  );
-
-
-  /*
-     Initially hide letter.
-  */
-
-  letter.classList.add(
-    "letter-hidden"
-  );
-
-
-  /*
-     Button interaction.
-  */
-
-  openButton.addEventListener(
-    "click",
-    () => {
-
-      letter.classList.toggle(
-        "letter-open"
-      );
-
-
-      openButton.classList.toggle(
-        "opened"
-      );
-
-
-      if (
-        openButton.classList.contains(
-          "opened"
-        )
-      ) {
-
-        openButton.innerHTML =
-          `
-            <span class="envelope-icon">♥</span>
-            <span>With All My Love</span>
-          `;
-
-      } else {
-
-        openButton.innerHTML =
-          `
-            <span class="envelope-icon">✉</span>
-            <span>Open My Heart</span>
-          `;
-
-      }
-
-    }
-  );
-
-}
-
-
-/* =========================================================
-   FINAL SECTION OBSERVER
-========================================================= */
-
-const finalSection =
-  document.querySelector(".final");
-
-
-if (finalSection) {
-
-  const finalObserver =
-    new IntersectionObserver(
-
-      (entries) => {
-
-        entries.forEach((entry) => {
-
-          if (entry.isIntersecting) {
-
-            finalSection.classList.add(
-              "final-active"
-            );
-
-            createHeartBurst();
-
-            finalObserver.unobserve(
-              finalSection
-            );
-
-          }
 
         });
 
-      },
-
-      {
-        threshold: 0.4
-      }
-
-    );
+    }
 
 
-  finalObserver.observe(
-    finalSection
-  );
+    /* =====================================================
+       DESKTOP NAVIGATION SMOOTH SCROLL
+    ===================================================== */
 
-}
+    document
+        .querySelectorAll('a[href^="#"]')
+        .forEach((link) => {
 
+            link.addEventListener(
+                "click",
+                (event) => {
 
-/* =========================================================
-   FINAL HEART BURST
-========================================================= */
+                    const targetId =
+                        link.getAttribute("href");
 
-function createHeartBurst() {
+                    const target =
+                        document.querySelector(
+                            targetId
+                        );
 
-  const numberOfHearts = 22;
+                    if (!target) return;
 
+                    event.preventDefault();
 
-  for (
-    let i = 0;
-    i < numberOfHearts;
-    i++
-  ) {
+                    target.scrollIntoView({
+                        behavior: "smooth",
+                        block: "start"
+                    });
 
-    setTimeout(() => {
+                }
+            );
 
-      const heart =
-        document.createElement("div");
-
-      heart.className =
-        "burst-heart";
-
-      heart.innerHTML =
-        "♥";
-
-
-      const angle =
-        (Math.PI * 2 * i) /
-        numberOfHearts;
-
-
-      const distance =
-        Math.random() * 220 + 100;
-
-
-      heart.style.setProperty(
-        "--x",
-        `${Math.cos(angle) * distance}px`
-      );
-
-
-      heart.style.setProperty(
-        "--y",
-        `${Math.sin(angle) * distance}px`
-      );
-
-
-      finalSection.appendChild(
-        heart
-      );
-
-
-      setTimeout(() => {
-
-        heart.remove();
-
-      }, 1800);
-
-    }, i * 35);
-
-  }
-
-}
-
-
-/* =========================================================
-   SMOOTH ANCHOR NAVIGATION
-========================================================= */
-
-document
-  .querySelectorAll('a[href^="#"]')
-  .forEach((link) => {
-
-    link.addEventListener(
-      "click",
-      (event) => {
-
-        const target =
-          document.querySelector(
-            link.getAttribute("href")
-          );
-
-
-        if (!target) return;
-
-
-        event.preventDefault();
-
-
-        target.scrollIntoView({
-          behavior: "smooth"
         });
 
-      }
+
+    /* =====================================================
+       BACK TO TOP
+    ===================================================== */
+
+    function updateTopButton() {
+
+        if (!topButton) return;
+
+        if (window.scrollY > 800) {
+
+            topButton.classList.add("show");
+
+        } else {
+
+            topButton.classList.remove("show");
+
+        }
+
+    }
+
+
+    window.addEventListener(
+        "scroll",
+        updateTopButton,
+        { passive: true }
     );
 
-  });
+
+    if (topButton) {
+
+        topButton.addEventListener(
+            "click",
+            () => {
+
+                window.scrollTo({
+                    top: 0,
+                    behavior: "smooth"
+                });
+
+            }
+        );
+
+    }
 
 
-/* =========================================================
-   CURSOR GLOW — DESKTOP
-========================================================= */
+    /* =====================================================
+       CUSTOM CURSOR HEART
+    ===================================================== */
 
-const cursorGlow =
-  document.createElement("div");
+    if (
+        cursorHeart &&
+        window.matchMedia("(pointer:fine)").matches
+    ) {
 
-cursorGlow.className =
-  "cursor-glow";
+        let cursorX = 0;
+        let cursorY = 0;
 
-document.body.appendChild(
-  cursorGlow
-);
-
-
-window.addEventListener(
-  "mousemove",
-  (event) => {
-
-    cursorGlow.style.left =
-      `${event.clientX}px`;
-
-    cursorGlow.style.top =
-      `${event.clientY}px`;
-
-  },
-  {
-    passive: true
-  }
-);
+        let heartX = 0;
+        let heartY = 0;
 
 
-/* =========================================================
-   REDUCE EFFECTS FOR MOBILE
-========================================================= */
+        document.addEventListener(
+            "mousemove",
+            (event) => {
 
-if (window.innerWidth < 700) {
+                cursorX = event.clientX;
+                cursorY = event.clientY;
 
-  cursorGlow.remove();
+            },
+            { passive: true }
+        );
 
-}
+
+        function animateCursor() {
+
+            heartX +=
+                (cursorX - heartX) * 0.12;
+
+            heartY +=
+                (cursorY - heartY) * 0.12;
+
+
+            cursorHeart.style.left =
+                `${heartX}px`;
+
+            cursorHeart.style.top =
+                `${heartY}px`;
+
+
+            requestAnimationFrame(
+                animateCursor
+            );
+
+        }
+
+
+        animateCursor();
+
+    } else if (cursorHeart) {
+
+        cursorHeart.style.display = "none";
+
+    }
+
+
+    /* =====================================================
+       MUSIC
+    ===================================================== */
+
+    let isPlaying = false;
+
+
+    if (musicButton && loveSong) {
+
+        musicButton.addEventListener(
+            "click",
+            async () => {
+
+                /*
+                 IMPORTANT
+
+                 Your HTML currently has no song source.
+
+                 If you want music:
+
+                 1. Put song.mp3 in your project root.
+                 2. In index.html change:
+
+                 <audio id="loveSong">
+
+                 to:
+
+                 <audio id="loveSong">
+                     <source
+                       src="song.mp3"
+                       type="audio/mpeg"
+                     >
+                 </audio>
+                */
+
+
+                if (!loveSong.querySelector("source")) {
+
+                    alert(
+                        "Add your licensed song as song.mp3 in the project folder first."
+                    );
+
+                    return;
+
+                }
+
+
+                try {
+
+                    if (!isPlaying) {
+
+                        await loveSong.play();
+
+                        isPlaying = true;
+
+                        musicButton.classList.add(
+                            "playing"
+                        );
+
+                        musicButton.innerHTML =
+                            `
+                            <span class="music-icon">
+                                ❚❚
+                            </span>
+
+                            <span class="music-text">
+                                Our Song
+                            </span>
+                            `;
+
+                    } else {
+
+                        loveSong.pause();
+
+                        isPlaying = false;
+
+                        musicButton.classList.remove(
+                            "playing"
+                        );
+
+                        musicButton.innerHTML =
+                            `
+                            <span class="music-icon">
+                                ♪
+                            </span>
+
+                            <span class="music-text">
+                                Our Song
+                            </span>
+                            `;
+
+                    }
+
+                } catch (error) {
+
+                    console.error(
+                        "Music playback error:",
+                        error
+                    );
+
+                }
+
+            }
+        );
+
+
+        loveSong.addEventListener(
+            "ended",
+            () => {
+
+                isPlaying = false;
+
+                musicButton.classList.remove(
+                    "playing"
+                );
+
+            }
+        );
+
+    }
+
+
+    /* =====================================================
+       GALLERY LIGHTBOX
+    ===================================================== */
+
+    const galleryItems =
+        document.querySelectorAll(
+            ".gallery-item"
+        );
+
+
+    function openLightbox(
+        imageSrc,
+        caption
+    ) {
+
+        if (!lightbox) return;
+
+
+        lightboxImage.src =
+            imageSrc;
+
+        lightboxImage.alt =
+            caption || "Memory";
+
+
+        lightboxCaption.textContent =
+            caption || "";
+
+
+        lightbox.classList.add(
+            "active"
+        );
+
+
+        document.body.classList.add(
+            "no-scroll"
+        );
+
+    }
+
+
+    function closeLightbox() {
+
+        if (!lightbox) return;
+
+
+        lightbox.classList.remove(
+            "active"
+        );
+
+
+        document.body.classList.remove(
+            "no-scroll"
+        );
+
+
+        setTimeout(() => {
+
+            if (lightboxImage) {
+
+                lightboxImage.src = "";
+
+            }
+
+        }, 400);
+
+    }
+
+
+    galleryItems.forEach((item) => {
+
+        item.addEventListener(
+            "click",
+            () => {
+
+                const image =
+                    item.querySelector("img");
+
+                const caption =
+                    item.querySelector("figcaption");
+
+
+                if (!image) return;
+
+
+                openLightbox(
+                    image.src,
+                    caption
+                        ? caption.textContent
+                        : ""
+                );
+
+            }
+        );
+
+    });
+
+
+    if (lightboxClose) {
+
+        lightboxClose.addEventListener(
+            "click",
+            closeLightbox
+        );
+
+    }
+
+
+    if (lightbox) {
+
+        lightbox.addEventListener(
+            "click",
+            (event) => {
+
+                if (
+                    event.target === lightbox
+                ) {
+
+                    closeLightbox();
+
+                }
+
+            }
+        );
+
+    }
+
+
+    /* =====================================================
+       ESCAPE KEY
+    ===================================================== */
+
+    document.addEventListener(
+        "keydown",
+        (event) => {
+
+            if (
+                event.key === "Escape" &&
+                lightbox &&
+                lightbox.classList.contains(
+                    "active"
+                )
+            ) {
+
+                closeLightbox();
+
+            }
+
+        }
+    );
+
+
+    /* =====================================================
+       ANNIVERSARY COUNTER
+    ===================================================== */
+
+    const weddingDate =
+        new Date(
+            "2020-08-23T00:00:00"
+        );
+
+
+    function updateAnniversaryCounter() {
+
+        const now =
+            new Date();
+
+
+        const difference =
+            now.getTime() -
+            weddingDate.getTime();
+
+
+        if (difference < 0) {
+
+            if (yearsTogether) {
+                yearsTogether.textContent = "0";
+            }
+
+            if (daysTogether) {
+                daysTogether.textContent = "0";
+            }
+
+            return;
+
+        }
+
+
+        /*
+         Calculate full years.
+        */
+
+        let years =
+            now.getFullYear() -
+            weddingDate.getFullYear();
+
+
+        const anniversaryThisYear =
+            new Date(
+                now.getFullYear(),
+                7,
+                23
+            );
+
+
+        if (
+            now < anniversaryThisYear
+        ) {
+
+            years--;
+
+        }
+
+
+        /*
+         Total days together.
+        */
+
+        const totalDays =
+            Math.floor(
+                difference /
+                (1000 * 60 * 60 * 24)
+            );
+
+
+        if (yearsTogether) {
+
+            yearsTogether.textContent =
+                years.toLocaleString();
+
+        }
+
+
+        if (daysTogether) {
+
+            daysTogether.textContent =
+                totalDays.toLocaleString();
+
+        }
+
+    }
+
+
+    updateAnniversaryCounter();
+
+
+    setInterval(
+        updateAnniversaryCounter,
+        60000
+    );
+
+
+    /* =====================================================
+       HERO PARALLAX
+    ===================================================== */
+
+    const heroBackground =
+        document.querySelector(
+            ".hero-background"
+        );
+
+
+    const anniversaryBackground =
+        document.querySelector(
+            ".anniversary-background"
+        );
+
+
+    function updateParallax() {
+
+        const scrollY =
+            window.scrollY;
+
+
+        if (
+            heroBackground &&
+            scrollY < window.innerHeight
+        ) {
+
+            heroBackground.style.transform =
+                `scale(1.06) translateY(${scrollY * 0.10}px)`;
+
+        }
+
+
+        if (
+            anniversaryBackground
+        ) {
+
+            const rect =
+                anniversaryBackground
+                    .parentElement
+                    .getBoundingClientRect();
+
+
+            const distance =
+                rect.top -
+                window.innerHeight / 2;
+
+
+            if (
+                rect.top < window.innerHeight &&
+                rect.bottom > 0
+            ) {
+
+                anniversaryBackground.style.transform =
+                    `scale(1.05) translateY(${distance * -0.03}px)`;
+
+            }
+
+        }
+
+    }
+
+
+    window.addEventListener(
+        "scroll",
+        updateParallax,
+        { passive: true }
+    );
+
+
+    /* =====================================================
+       IMAGE LOADING
+    ===================================================== */
+
+    const allImages =
+        document.querySelectorAll("img");
+
+
+    allImages.forEach((image) => {
+
+        image.addEventListener(
+            "load",
+            () => {
+
+                image.classList.add(
+                    "loaded"
+                );
+
+            }
+        );
+
+
+        image.addEventListener(
+            "error",
+            () => {
+
+                console.error(
+                    "Image failed to load:",
+                    image.getAttribute("src")
+                );
+
+
+                image.classList.add(
+                    "image-error"
+                );
+
+            }
+        );
+
+    });
+
+
+    /* =====================================================
+       RANDOM FLOATING HEARTS
+    ===================================================== */
+
+    function createFloatingHeart() {
+
+        /*
+         Only create these occasionally.
+        */
+
+        if (
+            window.innerWidth < 700
+        ) {
+
+            return;
+
+        }
+
+
+        const heart =
+            document.createElement("span");
+
+
+        heart.textContent =
+            "♥";
+
+
+        heart.style.position =
+            "fixed";
+
+
+        heart.style.left =
+            `${Math.random() * 100}%`;
+
+
+        heart.style.bottom =
+            "-20px";
+
+
+        heart.style.zIndex =
+            "2";
+
+
+        heart.style.pointerEvents =
+            "none";
+
+
+        heart.style.color =
+            "rgba(217,154,158,0.18)";
+
+
+        heart.style.fontSize =
+            `${8 + Math.random() * 10}px`;
+
+
+        const duration =
+            7 + Math.random() * 7;
+
+
+        heart.style.transition =
+            `transform ${duration}s linear, opacity ${duration}s linear`;
+
+
+        document.body.appendChild(
+            heart
+        );
+
+
+        requestAnimationFrame(() => {
+
+            heart.style.transform =
+                `
+                translateY(-${window.innerHeight + 100}px)
+                rotate(${Math.random() * 40 - 20}deg)
+                `;
+
+            heart.style.opacity =
+                "0";
+
+        });
+
+
+        setTimeout(() => {
+
+            heart.remove();
+
+        }, duration * 1000);
+
+    }
+
+
+    setInterval(
+        createFloatingHeart,
+        3500
+    );
+
+
+    /* =====================================================
+       TIMELINE IMAGE TILT
+    ===================================================== */
+
+    const timelineImages =
+        document.querySelectorAll(
+            ".timeline-image"
+        );
+
+
+    if (
+        window.matchMedia("(pointer:fine)").matches
+    ) {
+
+        timelineImages.forEach((container) => {
+
+            container.addEventListener(
+                "mousemove",
+                (event) => {
+
+                    const rect =
+                        container.getBoundingClientRect();
+
+
+                    const x =
+                        event.clientX -
+                        rect.left;
+
+
+                    const y =
+                        event.clientY -
+                        rect.top;
+
+
+                    const rotateY =
+                        ((x / rect.width) - 0.5) * 4;
+
+
+                    const rotateX =
+                        ((y / rect.height) - 0.5) * -4;
+
+
+                    const image =
+                        container.querySelector(
+                            "img"
+                        );
+
+
+                    if (image) {
+
+                        image.style.transform =
+                            `
+                            scale(1.04)
+                            perspective(800px)
+                            rotateX(${rotateX}deg)
+                            rotateY(${rotateY}deg)
+                            `;
+
+                    }
+
+                }
+            );
+
+
+            container.addEventListener(
+                "mouseleave",
+                () => {
+
+                    const image =
+                        container.querySelector(
+                            "img"
+                        );
+
+
+                    if (image) {
+
+                        image.style.transform =
+                            "";
+
+                    }
+
+                }
+            );
+
+        });
+
+    }
+
+
+    /* =====================================================
+       KEYBOARD ACCESSIBILITY
+    ===================================================== */
+
+    document.addEventListener(
+        "keydown",
+        (event) => {
+
+            if (
+                event.key === "m" ||
+                event.key === "M"
+            ) {
+
+                if (musicButton) {
+
+                    musicButton.click();
+
+                }
+
+            }
+
+        }
+    );
+
+
+    /* =====================================================
+       PAGE VISIBILITY
+    ===================================================== */
+
+    document.addEventListener(
+        "visibilitychange",
+        () => {
+
+            if (
+                document.hidden &&
+                loveSong &&
+                !loveSong.paused
+            ) {
+
+                loveSong.pause();
+
+                isPlaying = false;
+
+                if (musicButton) {
+
+                    musicButton.classList.remove(
+                        "playing"
+                    );
+
+                }
+
+            }
+
+        }
+    );
+
+
+    /* =====================================================
+       FINAL CONSOLE MESSAGE
+    ===================================================== */
+
+    console.log(
+        "%c♥ PRIYANKA & NAVEEN ♥",
+        `
+        font-size:24px;
+        color:#d99a9e;
+        font-family:Georgia;
+        `
+    );
+
+    console.log(
+        "%cFrom Hello to Forever.",
+        `
+        font-size:15px;
+        color:#c9a878;
+        `
+    );
+
+});
